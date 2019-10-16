@@ -37,7 +37,7 @@
                 return this.$route.path.indexOf(this.path)!==-1;
             },
 
-            //复杂的样式都可以通过这样
+            //复杂的样式都可以通过这样 对于要传样式进来
             activeStyle () {
                 return this.isActive ? {color:this.activeColor} : {};
             }
