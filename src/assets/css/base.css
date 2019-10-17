@@ -1,0 +1,10 @@
+@import "./normalize.css";
+/*总体风格统一文件*/
+/*获取更元素html*/
+    :root {
+        --color-content:green;
+    }
+
+    .ek {
+        color: var(--color-content);
+    }
