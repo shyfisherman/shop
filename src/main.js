@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from "./router";
 import {request} from "./network/request";
 
+
 Vue.config.productionTip = false
 
 new Vue({
@@ -10,10 +11,4 @@ new Vue({
   router
 }).$mount('#app')
 
-request({
-  url:'/home/multidata'
-}).then(res => {
-  console.log(res)
-}).catch(err =>{
-  console.log(err);
-})
+

@@ -2,9 +2,9 @@
 /*总体风格统一文件*/
 /*获取更元素html*/
     :root {
-        --color-content:green;
+        --comon-color:blank;
+    }
+    .test {
+        color:var(--comon-color);
     }
 
-    .ek {
-        color: var(--color-content);
-    }
