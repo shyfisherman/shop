@@ -131,11 +131,14 @@
     background-color: pink;
     color: white;
     position: fixed;
-    left:0px;
+    z-index: 999;
+    width: 100%;
+    left: 0px;
     right: 0px;
-    top:0px;
+    top: 0px;
 }
     .banner{
         margin-top: 44px;
     }
+
 </style>
