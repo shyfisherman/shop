@@ -6,6 +6,7 @@
         <!--推荐-->
         <home-recom :recommends="recommends"></home-recom>
         <tab-contro :titles="titles"></tab-contro>
+        <goods-list :goods="goods['pop'].list"></goods-list>
 
         <ul>
             <li>立标</li>
@@ -93,6 +94,7 @@
 
     import topBar from "components/common/topbar/topBar";
     import tabContro from "components/content/tabContro/tabContro";
+    import goodsList from "components/content/goods/goodsList";
 
 
     import homeSwiper from './childComp/homeSwiper';
@@ -100,15 +102,18 @@
 
 
     import {getHome,getHomeList} from "network/home";
+    import GoodsList from "../../components/content/goods/goodsList";
 
 
     export default {
         name: "home",
         components: {
+            GoodsList,
             topBar,
            homeSwiper,
             homeRecom,
-            tabContro
+            tabContro,
+            goodsList
 
         },
         data() {
@@ -118,7 +123,7 @@
                 titles:['流行','潮流','品牌'],
                 goods:{
                     'pop':{page:0,list:[]},
-                    'news':{page:0,list:[]},
+                    'new':{page:0,list:[]},
                     'sell':{page:0,list:[]}
                 }
             }
@@ -129,7 +134,7 @@
 
             //请求多个数据
             this.getHomeList('pop');
-            this.getHomeList('news');
+            this.getHomeList('new');
             this.getHomeList('sell');
 
         },
@@ -145,8 +150,10 @@
             getHomeList(type){
                 const page = this.goods[type].page+1;
                 getHomeList(type,page).then(res =>{
-                    //一个一个元素塞进去
-                    this.goods[type].list(...res.data.list);
+
+                    let list =res.data.list;
+                    //一个一个元素塞进去 这个语法可以把数组
+                    this.goods[type].list.push(...list);
                     this.goods[type].page += 1;
                 },error => {
                     console.log(error)
