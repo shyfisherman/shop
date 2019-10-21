@@ -18,6 +18,7 @@
             }
         },
         methods:{
+            //点击切换
             itemClick(index){
                 this.currentIndex=index;
             }

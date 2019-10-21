@@ -26,7 +26,6 @@
     }
     .middle{
         flex: 1;
-
     }
 
 </style>
