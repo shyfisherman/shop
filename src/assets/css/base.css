@@ -2,7 +2,7 @@
 /*总体风格统一文件*/
 /*获取更元素html*/
     :root {
-        --comon-color:blank;
+        --comon-color:pink;
     }
     .test {
         color:var(--comon-color);

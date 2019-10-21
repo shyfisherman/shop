@@ -21,6 +21,8 @@
             //点击切换
             itemClick(index){
                 this.currentIndex=index;
+                //组件传递
+                this.$emit('tabClick',index);
             }
         },
         props:{
@@ -58,6 +60,8 @@
         position: sticky;
         top: 44px;
         background-color: white;
+        z-index: 999;
+
     }
 
 

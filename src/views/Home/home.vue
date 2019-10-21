@@ -5,8 +5,8 @@
         <home-swiper class="banner" :banner="banner"></home-swiper>
         <!--推荐-->
         <home-recom :recommends="recommends"></home-recom>
-        <tab-contro :titles="titles"></tab-contro>
-        <goods-list :goods="goods['pop'].list"></goods-list>
+        <tab-contro :titles="titles" @tabClick="tabClick"></tab-contro>
+        <goods-list :goods="goodsType"></goods-list>
 
         <ul>
             <li>立标</li>
@@ -125,7 +125,8 @@
                     'pop':{page:0,list:[]},
                     'new':{page:0,list:[]},
                     'sell':{page:0,list:[]}
-                }
+                },
+                currentType:'pop'
             }
         },
         created() {
@@ -137,6 +138,11 @@
             this.getHomeList('new');
             this.getHomeList('sell');
 
+        },
+        computed:{
+            goodsType(){
+                return this.goods[this.currentType].list;
+            }
         },
         methods:{
             //请求轮播图
@@ -158,7 +164,21 @@
                 },error => {
                     console.log(error)
                 })
+            },
+
+            //点击tabconro
+            tabClick(index){
+                if(index ==0){
+                    this.currentType='pop'
+                }
+                if(index ==1){
+                    this.currentType='new'
+                }
+                if(index ==2){
+                    this.currentType='sell'
+                }
             }
+
 
         }
     }
