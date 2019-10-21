@@ -2,22 +2,103 @@
     <div id="home">
         <topBar class="home-top"><div  slot="mid">首页</div></topBar>
         <!--轮播图-->
-        <home-swiper :banner="banner"></home-swiper>
+        <home-swiper class="banner" :banner="banner"></home-swiper>
         <!--推荐-->
         <home-recom :recommends="recommends"></home-recom>
+        <tab-contro :titles="titles"></tab-contro>
+
+        <ul>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+            <li>立标</li>
+
+        </ul>
+
+
+
     </div>
 
 </template>
 
 <script>
-    <!--公共组件-->
-    import topBar from "components/common/topbar/topBar";
 
-    <!--页面组件-->
+    import topBar from "components/common/topbar/topBar";
+    import tabContro from "components/content/tabContro/tabContro";
+
+
     import homeSwiper from './childComp/homeSwiper';
     import homeRecom  from "./childComp/homeRecom";
 
-    <!--请求数据-->
+
     import {getHome} from "network/home";
 
     export default {
@@ -25,13 +106,15 @@
         components: {
             topBar,
            homeSwiper,
-            homeRecom
+            homeRecom,
+            tabContro
 
         },
         data() {
             return {
                 banner:[],
-                recommends:[]
+                recommends:[],
+                titles:['流行','潮流','品牌']
             }
         },
         created() {
@@ -45,6 +128,14 @@
 
 <style scoped>
 .home-top{
-    background-color: white;
+    background-color: pink;
+    color: white;
+    position: fixed;
+    left:0px;
+    right: 0px;
+    top:0px;
 }
+    .banner{
+        margin-top: 44px;
+    }
 </style>
