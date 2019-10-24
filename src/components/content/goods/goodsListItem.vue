@@ -1,6 +1,6 @@
 <template>
     <div class="goods-item">
-        <img :src="listItem.show.img">
+        <img :src="listItem.show.img" @load="loadImage">
         <div class="goods-info">
             <p>{{listItem.title}}</p>
             <span class="price">{{listItem.price}}</span>
@@ -19,6 +19,13 @@
                    return {}
                }
            }
+        },
+        methods:{
+            //监听图片完成就触发
+            loadImage(){
+                //事件总线 解决滚动组件的bug  发射 类似vuex 首页监听
+                this.$bus.$emit('itemImgLoad')
+            }
         }
     }
 </script>
