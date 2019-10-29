@@ -4,14 +4,16 @@
             <div slot="mid">首页</div>
         </topBar>
         <!--轮播图-->
-        <scroll class="wrap2" ref="scroll">
+        <scroll class="wrap2" ref="scroll" @scroll="onContentScroll" :probe-type="3">
             <home-swiper class="banner" :banner="banner"></home-swiper>
             <!--推荐-->
             <home-recom :recommends="recommends"></home-recom>
             <tab-contro :titles="titles" @tabClick="tabClick"></tab-contro>
             <goods-list :goods="goodsType"></goods-list>
         </scroll>
+        <back-top @click.native = "bakcTop" v-show = "isShowBack"></back-top>
     </div>
+
 
 </template>
 
@@ -21,6 +23,7 @@
     import tabContro from "components/content/tabContro/tabContro";
     import goodsList from "components/content/goods/goodsList";
     import scroll from "components/common/scroll/scroll";
+    import backTop from "components/common/backtop/backTop";
 
 
     import homeSwiper from './childComp/homeSwiper';
@@ -40,7 +43,9 @@
             homeSwiper,
             homeRecom,
             tabContro,
-            goodsList
+            goodsList,
+            backTop
+
 
 
         },
@@ -54,7 +59,8 @@
                     'new': {page: 0, list: []},
                     'sell': {page: 0, list: []}
                 },
-                currentType: 'pop'
+                currentType: 'pop',
+                isShowBack:false
             }
         },
         created() {
@@ -110,6 +116,15 @@
                 if (index == 2) {
                     this.currentType = 'sell'
                 }
+            },
+
+            //回到顶部
+            bakcTop(){
+                this.$refs.scroll.scrollTo(0,0,500);
+            },
+            //滚动触发 显示隐藏按钮
+            onContentScroll(position) {
+                this.isShowBack =  (-position.y) > 1000;
             }
 
 
@@ -146,5 +161,8 @@
         right: 0;
         overflow:hidden;
     }
-
+    /*.wrap2 {*/
+    /*    height: calc(100%-98px);*/
+    /*    overflow: hidden;*/
+    /*}*/
 </style>
