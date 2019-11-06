@@ -3,12 +3,17 @@
         <topBar class="home-top">
             <div slot="mid">首页</div>
         </topBar>
+        <tab-contro class="spe-tab" ref="tabContro2" :titles="titles" @tabClick="tabClick" v-show="showXd"></tab-contro>
         <!--轮播图-->
-        <scroll class="wrap2" ref="scroll" @scroll="onContentScroll" :probe-type="3">
-            <home-swiper class="banner" :banner="banner"></home-swiper>
+        <scroll class="wrap2" ref="scroll"
+                @scroll="onContentScroll"
+                :pull-up-load = "true"
+                :probe-type="3"
+                @pullingUp="loadMord">
+            <home-swiper class="banner" :banner="banner" @swpierImgLoad="loadImgSwiper"></home-swiper>
             <!--推荐-->
             <home-recom :recommends="recommends"></home-recom>
-            <tab-contro :titles="titles" @tabClick="tabClick"></tab-contro>
+            <tab-contro  ref="tabContro1" :titles="titles" @tabClick="tabClick"></tab-contro>
             <goods-list :goods="goodsType"></goods-list>
         </scroll>
         <back-top @click.native = "bakcTop" v-show = "isShowBack"></back-top>
@@ -24,6 +29,7 @@
     import goodsList from "components/content/goods/goodsList";
     import scroll from "components/common/scroll/scroll";
     import backTop from "components/common/backtop/backTop";
+    import {fangDou} from "common/tool";
 
 
     import homeSwiper from './childComp/homeSwiper';
@@ -45,9 +51,6 @@
             tabContro,
             goodsList,
             backTop
-
-
-
         },
         data() {
             return {
@@ -60,7 +63,10 @@
                     'sell': {page: 0, list: []}
                 },
                 currentType: 'pop',
-                isShowBack:false
+                isShowBack:false,
+                offsetTop:null,//距离顶部
+                showXd:false,//是否显示吸顶
+
             }
         },
         created() {
@@ -72,9 +78,15 @@
             this.getHomeList('new');
             this.getHomeList('sell');
 
-            //监听图片加载完成
+
+        },
+        mounted(){
+            //监听图片加载完成 又因为bus没值 需要到main。js
+            const refresh = fangDou(this.$refs.scroll.refresh,500);
             this.$bus.$on('itemImgLoad',() => {
-                this.$refs.scroll.scroll.refresh();//解决bug 最后就是调用这个方法 不断刷新 重新设置高度
+                //create 拿不到$refs 还没加载  执行太频繁 使用防抖
+                //解决bug 最后就是调用这个方法 不断刷新 重新设置高
+                refresh();
             });
 
         },
@@ -100,6 +112,8 @@
                     //一个一个元素塞进去 这个语法可以把数组
                     this.goods[type].list.push(...list);
                     this.goods[type].page += 1;
+                    //完成上拉加载更多
+                    this.$refs.scroll.finishPullUp();
                 }, error => {
                     console.log(error)
                 })
@@ -116,6 +130,8 @@
                 if (index == 2) {
                     this.currentType = 'sell'
                 }
+                this.$refs.tabContro1.currentIndex=index;
+                this.$refs.tabContro2.currentIndex=index;
             },
 
             //回到顶部
@@ -125,7 +141,18 @@
             //滚动触发 显示隐藏按钮
             onContentScroll(position) {
                 this.isShowBack =  (-position.y) > 1000;
+                this.showXd = (-position.y)>this.offsetTop;//滚动的距离
+
+            },
+            //加载更多
+            loadMord(){
+
+                this.getHomeList(this.currentType);
+            },
+            loadImgSwiper(){
+               this.offsetTop = this.$refs.tabContro1.$el.offsetTop;//吸顶效果 滚动的高度 如果大于等于这个高度 就出来
             }
+
 
 
         }
@@ -141,12 +168,15 @@
     .home-top {
         background-color: pink;
         color: white;
-        position: fixed;
-        z-index: 999;
         width: 100%;
         left: 0px;
         right: 0px;
         top: 0px;
+    }
+    .spe-tab{
+        position: relative;
+        background-color: white;
+        z-index: 9;
     }
 
     /*.banner {*/

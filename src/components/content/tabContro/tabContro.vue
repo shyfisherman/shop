@@ -1,6 +1,6 @@
 <template>
     <div class="tab-contro">
-        <div class="tab-contro-item" v-for="(item,index) in titles"
+        <div class ='tab-contro-item' v-for="(item,index) in titles"
         :class="{active:index==currentIndex}"
              @click="itemClick(index)"
         >
@@ -56,13 +56,7 @@
     .active span {
         border-bottom: 1px solid deeppink;
     }
-    .tab-contro{
-        position: sticky;
-        top: 44px;
-        background-color: white;
-        z-index: 999;
 
-    }
 
 
 
